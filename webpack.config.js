@@ -8,7 +8,7 @@ module.exports = {
 
   output: {
     path: resolve(__dirname, "dist"),
-    filename: "tvs-libs.js",
+    filename: "tvs-utils.js",
     library: 'tvsLibs',
     libraryTarget: "umd"
   },
