@@ -1,0 +1,17 @@
+{
+  "ecmaVersion": 7,
+  "libs": [
+    "browser",
+    "chai"
+  ],
+  "loadEagerly": [
+    "lib/**/*.js"
+  ],
+  "plugins": {
+    "complete_strings": {
+      "maxLength": 15
+    },
+    "node_resolve": {},
+    "es_modules": {}
+  }
+}
