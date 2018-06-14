@@ -1,4 +1,5 @@
 import { mat4, vec3 } from 'gl-matrix'
+import { Keys } from 'tvs-libs/dist/lib/events/keyboard'
 
 
 export function create (opts = {}) {
@@ -89,4 +90,32 @@ export function update ({ props, state: { view, perspective, rotationX, rotation
 		mat4.multiply(view, view, rotationX)
 		mat4.invert(view, view)
 	}
+}
+
+
+export function updatePosFromKeys(camera: any, speed: number, keys: any) {
+	if (!keys) return
+	if (keys[Keys.UP] || keys[Keys.W]) {
+		camera.props.moveForward = speed
+	}
+	if (keys[Keys.DOWN] || keys[Keys.S]) {
+		camera.props.moveForward = -speed
+	}
+	if (keys[Keys.LEFT] || keys[Keys.A]) {
+		camera.props.moveLeft = speed
+	}
+	if (keys[Keys.RIGHT] || keys[Keys.D]) {
+		camera.props.moveLeft = -speed
+	}
+}
+
+
+let oX = 0, oY = 0
+export function updateRotFromMouse(camera: any, speed: number, m: any) {
+	const deltaX = m.drag.x === 0 ? m.drag.x : oX - m.drag.x
+	const deltaY = m.drag.y === 0 ? m.drag.y : oY - m.drag.y
+	oX = m.drag.x
+	oY = m.drag.y
+	camera.props.rotateX = deltaY * speed
+	camera.props.rotateY = deltaX * speed
 }

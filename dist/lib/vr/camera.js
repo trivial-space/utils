@@ -1,4 +1,5 @@
 import { mat4, vec3 } from 'gl-matrix';
+import { Keys } from 'tvs-libs/dist/lib/events/keyboard';
 export function create(opts) {
     if (opts === void 0) { opts = {}; }
     var props = Object.assign({
@@ -63,5 +64,30 @@ export function update(_a) {
         mat4.multiply(view, view, rotationX);
         mat4.invert(view, view);
     }
+}
+export function updatePosFromKeys(camera, speed, keys) {
+    if (!keys)
+        return;
+    if (keys[Keys.UP] || keys[Keys.W]) {
+        camera.props.moveForward = speed;
+    }
+    if (keys[Keys.DOWN] || keys[Keys.S]) {
+        camera.props.moveForward = -speed;
+    }
+    if (keys[Keys.LEFT] || keys[Keys.A]) {
+        camera.props.moveLeft = speed;
+    }
+    if (keys[Keys.RIGHT] || keys[Keys.D]) {
+        camera.props.moveLeft = -speed;
+    }
+}
+var oX = 0, oY = 0;
+export function updateRotFromMouse(camera, speed, m) {
+    var deltaX = m.drag.x === 0 ? m.drag.x : oX - m.drag.x;
+    var deltaY = m.drag.y === 0 ? m.drag.y : oY - m.drag.y;
+    oX = m.drag.x;
+    oY = m.drag.y;
+    camera.props.rotateX = deltaY * speed;
+    camera.props.rotateY = deltaX * speed;
 }
 //# sourceMappingURL=camera.js.map

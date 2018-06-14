@@ -3,7 +3,7 @@
 		"no-duplicate-variable": true,
 		"no-unused-variable": true,
 		"curly": [true, "ignore-same-line"],
-		"class-name": true,
+		"class-name": false,
 		"semicolon": [
 			true,
 			"never"

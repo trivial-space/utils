@@ -1,4 +1,3 @@
-/// <reference types="gl-matrix" />
 import { mat4 } from 'gl-matrix';
 export declare function create(opts?: {}): {
     props: {
@@ -21,4 +20,6 @@ export declare function create(opts?: {}): {
         position: number[];
     };
 };
-export declare function update({props, state: {view, perspective, rotationX, rotationY, position}}: any): void;
+export declare function update({ props, state: { view, perspective, rotationX, rotationY, position } }: any): void;
+export declare function updatePosFromKeys(camera: any, speed: number, keys: any): void;
+export declare function updateRotFromMouse(camera: any, speed: number, m: any): void;
