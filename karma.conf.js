@@ -1,86 +1,86 @@
 const webpack = require('./webpack.config')
 
 
-module.exports = function (config) {
-  config.set({
+module.exports = function(config) {
+	config.set({
 
-    // base path that will be used to resolve all patterns (eg. files, exclude)
-    basePath: '',
-
-
-    // frameworks to use
-    // available frameworks: https://npmjs.org/browse/keyword/karma-adapter
-    frameworks: ['mocha', 'chai-sinon'],
+		// base path that will be used to resolve all patterns (eg. files, exclude)
+		basePath: '',
 
 
-    // list of files / patterns to load in the browser
-    files: [
-      'spec/test-main.js'
-    ],
+		// frameworks to use
+		// available frameworks: https://npmjs.org/browse/keyword/karma-adapter
+		frameworks: ['mocha', 'chai-sinon'],
 
 
-    preprocessors: {
-      // add webpack as preprocessor
-      'spec/test-main.js': ['webpack', 'sourcemap'] // use this for source maps
-    },
+		// list of files / patterns to load in the browser
+		files: [
+			'spec/test-main.js'
+		],
 
 
-    webpack: {
-      module: webpack.module,
-      resolve: webpack.resolve,
-      devtool: 'inline-source-map',
-    },
+		preprocessors: {
+			// add webpack as preprocessor
+			'spec/test-main.js': ['webpack', 'sourcemap'] // use this for source maps
+		},
 
 
-    webpackMiddleware: {
-      // webpack-dev-middleware configuration
-      // i. e.
-      noInfo: true
-    },
+		webpack: {
+			module: webpack.module,
+			resolve: webpack.resolve,
+			devtool: 'cheap-module-eval-source-map',
+		},
 
 
-    browserNoActivityTimeout: 60000, // give webpack more time to build
+		webpackMiddleware: {
+			// webpack-dev-middleware configuration
+			// i. e.
+			noInfo: true
+		},
 
 
-    // list of files to exclude
-    exclude: [],
+		browserNoActivityTimeout: 60000, // give webpack more time to build
 
 
-    // test results reporter to use
-    // possible values: 'dots', 'progress'
-    // available reporters: https://npmjs.org/browse/keyword/karma-reporter
-    reporters: ['mocha'],
+		// list of files to exclude
+		exclude: [],
 
 
-    mochaReporter: {
-        showDiff: true
-    },
+		// test results reporter to use
+		// possible values: 'dots', 'progress'
+		// available reporters: https://npmjs.org/browse/keyword/karma-reporter
+		reporters: ['mocha'],
 
 
-    // web server port
-    port: 9876,
+		mochaReporter: {
+			showDiff: true
+		},
 
 
-    // enable / disable colors in the output (reporters and logs)
-    colors: true,
+		// web server port
+		port: 9876,
 
 
-    // level of logging
-    // possible values: config.LOG_DISABLE || config.LOG_ERROR || config.LOG_WARN || config.LOG_INFO || config.LOG_DEBUG
-    logLevel: config.LOG_INFO,
+		// enable / disable colors in the output (reporters and logs)
+		colors: true,
 
 
-    // enable / disable watching file and executing tests whenever any file changes
-    autoWatch: true,
+		// level of logging
+		// possible values: config.LOG_DISABLE || config.LOG_ERROR || config.LOG_WARN || config.LOG_INFO || config.LOG_DEBUG
+		logLevel: config.LOG_INFO,
 
 
-    // start these browsers
-    // available browser launchers: https://npmjs.org/browse/keyword/karma-launcher
-    browsers: ['Chrome'],
+		// enable / disable watching file and executing tests whenever any file changes
+		autoWatch: true,
 
 
-    // Continuous Integration mode
-    // if true, Karma captures browsers, runs the tests and exits
-    singleRun: false
-  });
+		// start these browsers
+		// available browser launchers: https://npmjs.org/browse/keyword/karma-launcher
+		browsers: ['Chrome'],
+
+
+		// Continuous Integration mode
+		// if true, Karma captures browsers, runs the tests and exits
+		singleRun: false
+	});
 };
