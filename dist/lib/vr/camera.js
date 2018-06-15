@@ -64,6 +64,7 @@ export function update(_a) {
         mat4.multiply(view, view, rotationX);
         mat4.invert(view, view);
     }
+    return needsUpdateView;
 }
 export function updatePosFromKeys(camera, speed, keys) {
     if (!keys)

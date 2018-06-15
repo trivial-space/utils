@@ -90,6 +90,8 @@ export function update ({ props, state: { view, perspective, rotationX, rotation
 		mat4.multiply(view, view, rotationX)
 		mat4.invert(view, view)
 	}
+
+	return needsUpdateView
 }
 
 
