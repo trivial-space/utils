@@ -1,27 +1,39 @@
+var __assign = (this && this.__assign) || Object.assign || function(t) {
+    for (var s, i = 1, n = arguments.length; i < n; i++) {
+        s = arguments[i];
+        for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
+            t[p] = s[p];
+    }
+    return t;
+};
 import { mat4, vec3 } from 'gl-matrix';
 import { Keys } from 'tvs-libs/dist/lib/events/keyboard';
+var defaultProps = {
+    fovy: Math.PI * 0.6,
+    aspect: window.innerWidth / window.innerHeight,
+    near: 0.1,
+    far: 1000,
+    needsUpdatePerspective: true,
+    rotateX: 0,
+    rotateY: 0,
+    moveForward: 0,
+    moveLeft: 0,
+    moveUp: 0,
+    needsUpdateView: false
+};
 export function create(opts) {
     if (opts === void 0) { opts = {}; }
-    var props = Object.assign({
-        fovy: Math.PI * 0.6,
-        aspect: window.innerWidth / window.innerHeight,
-        near: 0.1,
-        far: 1000,
-        needsUpdatePerspective: false,
-        rotateX: 0,
-        rotateY: 0,
-        moveForward: 0,
-        moveLeft: 0,
-        moveUp: 0
-    }, opts);
+    var props = __assign({}, defaultProps, opts);
     var state = {
         view: mat4.create(),
-        perspective: mat4.perspective(mat4.create(), props.fovy, props.aspect, props.near, props.far),
+        perspective: mat4.create(),
         rotationX: mat4.create(),
         rotationY: mat4.create(),
         position: [0, 0, 0]
     };
-    return { props: props, state: state };
+    var cam = { props: props, state: state };
+    update(cam);
+    return cam;
 }
 export function update(_a) {
     var props = _a.props, _b = _a.state, view = _b.view, perspective = _b.perspective, rotationX = _b.rotationX, rotationY = _b.rotationY, position = _b.position;
@@ -29,7 +41,7 @@ export function update(_a) {
         props.needsUpdatePerspective = false;
         mat4.perspective(perspective, props.fovy, props.aspect, props.near, props.far);
     }
-    var needsUpdateView = false;
+    var needsUpdateView = props.needsUpdateView;
     if (props.rotateX) {
         mat4.rotateX(rotationX, rotationX, props.rotateX);
         props.rotateX = 0;
@@ -63,6 +75,7 @@ export function update(_a) {
         mat4.multiply(view, view, rotationY);
         mat4.multiply(view, view, rotationX);
         mat4.invert(view, view);
+        props.needsUpdateView = false;
     }
     return needsUpdateView;
 }
@@ -82,12 +95,12 @@ export function updatePosFromKeys(camera, speed, keys) {
         camera.props.moveLeft = -speed;
     }
 }
-var oX = 0, oY = 0;
 export function updateRotFromMouse(camera, speed, m) {
-    var deltaX = m.drag.x === 0 ? m.drag.x : oX - m.drag.x;
-    var deltaY = m.drag.y === 0 ? m.drag.y : oY - m.drag.y;
-    oX = m.drag.x;
-    oY = m.drag.y;
+    camera.state.mouse = camera.state.mouse || { x: 0, y: 0 };
+    var deltaX = m.drag.x === 0 ? m.drag.x : camera.state.mouse.x - m.drag.x;
+    var deltaY = m.drag.y === 0 ? m.drag.y : camera.state.mouse.y - m.drag.y;
+    camera.state.mouse.x = m.drag.x;
+    camera.state.mouse.y = m.drag.y;
     camera.props.rotateX = deltaY * speed;
     camera.props.rotateY = deltaX * speed;
 }

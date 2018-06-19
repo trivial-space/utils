@@ -1,37 +1,42 @@
 import { mat4, vec3 } from 'gl-matrix'
-import { Keys } from 'tvs-libs/dist/lib/events/keyboard'
+import { Keys, KeyState } from 'tvs-libs/dist/lib/events/keyboard'
+import { MouseState } from 'tvs-libs/dist/lib/events/mouse'
 
 
-export function create (opts = {}) {
+const defaultProps = {
+	fovy: Math.PI * 0.6,
+	aspect: window.innerWidth / window.innerHeight,
+	near: 0.1,
+	far: 1000,
+	needsUpdatePerspective: true,
+	rotateX: 0,
+	rotateY: 0,
+	moveForward: 0,
+	moveLeft: 0,
+	moveUp: 0,
+	needsUpdateView: false
+}
 
-	const props = Object.assign({
-		fovy: Math.PI * 0.6,
-		aspect: window.innerWidth / window.innerHeight,
-		near: 0.1,
-		far: 1000,
-		needsUpdatePerspective: false,
-		rotateX: 0,
-		rotateY: 0,
-		moveForward: 0,
-		moveLeft: 0,
-		moveUp: 0
-	}, opts)
+type Props = typeof defaultProps
+
+
+export function create (opts = {} as Partial<Props>) {
+	const props = {
+		...defaultProps,
+		...opts
+	}
 
 	const state = {
 		view: mat4.create(),
-		perspective: mat4.perspective(
-			mat4.create(),
-			props.fovy,
-			props.aspect,
-			props.near,
-			props.far
-		),
+		perspective: mat4.create(),
 		rotationX: mat4.create(),
 		rotationY: mat4.create(),
 		position: [0, 0, 0]
 	}
 
-	return { props, state }
+	const cam = { props, state }
+	update(cam)
+	return cam
 }
 
 
@@ -49,7 +54,7 @@ export function update ({ props, state: { view, perspective, rotationX, rotation
 		)
 	}
 
-	let needsUpdateView = false
+	let needsUpdateView = props.needsUpdateView
 
 	if (props.rotateX) {
 		mat4.rotateX(rotationX, rotationX, props.rotateX)
@@ -89,13 +94,14 @@ export function update ({ props, state: { view, perspective, rotationX, rotation
 		mat4.multiply(view, view, rotationY)
 		mat4.multiply(view, view, rotationX)
 		mat4.invert(view, view)
+		props.needsUpdateView = false
 	}
 
 	return needsUpdateView
 }
 
 
-export function updatePosFromKeys(camera: any, speed: number, keys: any) {
+export function updatePosFromKeys(camera: any, speed: number, keys: KeyState) {
 	if (!keys) return
 	if (keys[Keys.UP] || keys[Keys.W]) {
 		camera.props.moveForward = speed
@@ -112,12 +118,12 @@ export function updatePosFromKeys(camera: any, speed: number, keys: any) {
 }
 
 
-let oX = 0, oY = 0
-export function updateRotFromMouse(camera: any, speed: number, m: any) {
-	const deltaX = m.drag.x === 0 ? m.drag.x : oX - m.drag.x
-	const deltaY = m.drag.y === 0 ? m.drag.y : oY - m.drag.y
-	oX = m.drag.x
-	oY = m.drag.y
+export function updateRotFromMouse(camera: any, speed: number, m: MouseState) {
+	camera.state.mouse = camera.state.mouse || { x: 0, y: 0 }
+	const deltaX = m.drag.x === 0 ? m.drag.x : camera.state.mouse.x - m.drag.x
+	const deltaY = m.drag.y === 0 ? m.drag.y : camera.state.mouse.y - m.drag.y
+	camera.state.mouse.x = m.drag.x
+	camera.state.mouse.y = m.drag.y
 	camera.props.rotateX = deltaY * speed
 	camera.props.rotateY = deltaX * speed
 }

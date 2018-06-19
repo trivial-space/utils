@@ -1,5 +1,19 @@
 import { mat4 } from 'gl-matrix';
-export declare function create(opts?: {}): {
+import { KeyState } from 'tvs-libs/dist/lib/events/keyboard';
+import { MouseState } from 'tvs-libs/dist/lib/events/mouse';
+export declare function create(opts?: Partial<{
+    fovy: number;
+    aspect: number;
+    near: number;
+    far: number;
+    needsUpdatePerspective: boolean;
+    rotateX: number;
+    rotateY: number;
+    moveForward: number;
+    moveLeft: number;
+    moveUp: number;
+    needsUpdateView: boolean;
+}>): {
     props: {
         fovy: number;
         aspect: number;
@@ -11,6 +25,7 @@ export declare function create(opts?: {}): {
         moveForward: number;
         moveLeft: number;
         moveUp: number;
+        needsUpdateView: boolean;
     };
     state: {
         view: mat4;
@@ -20,6 +35,6 @@ export declare function create(opts?: {}): {
         position: number[];
     };
 };
-export declare function update({ props, state: { view, perspective, rotationX, rotationY, position } }: any): boolean;
-export declare function updatePosFromKeys(camera: any, speed: number, keys: any): void;
-export declare function updateRotFromMouse(camera: any, speed: number, m: any): void;
+export declare function update({ props, state: { view, perspective, rotationX, rotationY, position } }: any): any;
+export declare function updatePosFromKeys(camera: any, speed: number, keys: KeyState): void;
+export declare function updateRotFromMouse(camera: any, speed: number, m: MouseState): void;
