@@ -1,6 +1,10 @@
 import { EntityRef } from 'tvs-flow/dist/lib/utils/entity-reference';
 import { WindowSizeState } from 'tvs-libs/dist/lib/events/dom';
-import { Painter, Shade, Form, Sketch, Layer, SketchData, LayerData, ShadeData, FormData, DrawSettings } from 'tvs-painter/dist/lib/painter-types';
+import { Painter } from 'tvs-painter/dist/lib/painter';
+import { Layer, SketchData, LayerData, ShadeData, FormData, DrawSettings } from 'tvs-painter/dist/lib/painter-types';
+import { Shade } from 'tvs-painter/dist/lib/shade';
+import { Form } from 'tvs-painter/dist/lib/form';
+import { Sketch } from 'tvs-painter/dist/lib/sketch';
 export declare function createBodyCanvas(): {
     canvas: EntityRef<HTMLCanvasElement>;
 };

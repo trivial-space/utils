@@ -1,6 +1,6 @@
 import { asyncStreamStart, stream, asyncStream } from 'tvs-flow/dist/lib/utils/entity-reference';
-import { create } from 'tvs-painter/dist/lib/painter';
 import { getContext } from 'tvs-painter/dist/lib/utils/context';
+import { Painter } from 'tvs-painter/dist/lib/painter';
 import { unequal } from 'tvs-libs/dist/lib/utils/predicates';
 export function createBodyCanvas() {
     var canvas = asyncStreamStart(null, function (send) {
@@ -16,7 +16,7 @@ export function createBodyCanvas() {
 export function setupPainter(canvas, windowSizeEntity, painterSettings) {
     var gl = stream([canvas.HOT], getContext);
     var painter = asyncStream([gl.HOT], function (send, gl) {
-        var p = create(gl);
+        var p = new Painter(gl);
         send(p);
         return p.destroy;
     })

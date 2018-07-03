@@ -1,9 +1,12 @@
 import { EntityRef, asyncStreamStart, stream, asyncStream } from 'tvs-flow/dist/lib/utils/entity-reference'
 import { WindowSizeState } from 'tvs-libs/dist/lib/events/dom'
-import { create } from 'tvs-painter/dist/lib/painter'
 import { getContext } from 'tvs-painter/dist/lib/utils/context'
-import { Painter, Shade, Form, Sketch, Layer, GL, SketchData, LayerData, ShadeData, FormData, DrawSettings } from 'tvs-painter/dist/lib/painter-types'
+import { Painter } from 'tvs-painter/dist/lib/painter'
+import { Layer, GL, SketchData, LayerData, ShadeData, FormData, DrawSettings } from 'tvs-painter/dist/lib/painter-types'
 import { unequal } from 'tvs-libs/dist/lib/utils/predicates'
+import { Shade } from 'tvs-painter/dist/lib/shade'
+import { Form } from 'tvs-painter/dist/lib/form'
+import { Sketch } from 'tvs-painter/dist/lib/sketch'
 
 
 export function createBodyCanvas() {
@@ -37,7 +40,7 @@ export function setupPainter (
 	const painter = asyncStream<Painter, GL>(
 		[gl.HOT],
 		(send, gl) => {
-			const p = create(gl)
+			const p = new Painter(gl)
 			send(p)
 			return p.destroy
 		}
