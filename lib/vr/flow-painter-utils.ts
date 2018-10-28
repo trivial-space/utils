@@ -7,6 +7,7 @@ import { unequal } from 'tvs-libs/dist/lib/utils/predicates'
 import { Shade } from 'tvs-painter/dist/lib/shade'
 import { Form } from 'tvs-painter/dist/lib/form'
 import { Sketch } from 'tvs-painter/dist/lib/sketch'
+import { defaultShaders } from 'tvs-painter/dist/lib/asset-lib'
 
 
 export function createBodyCanvas() {
@@ -203,7 +204,7 @@ export function makeEffectLayerEntity (
 	const entity = asyncStream<Layer, Painter>(
 		[painter.HOT],
 		(send, painter) => {
-			const layer = painter.createEffectLayer()
+			const layer = painter.createEffectLayer().update({frag: defaultShaders.basicEffect.frag})
 			send(layer)
 			return layer.destroy
 		}
