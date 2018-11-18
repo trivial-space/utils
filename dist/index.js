@@ -1,10 +1,6 @@
 import * as vrCamera from './vr/camera';
-import * as vrFlowCamera from './vr/flow-camera';
-import * as vrFlowPainterUtils from './vr/flow-painter-utils';
 export var vr = {
-    camera: vrCamera,
-    flowCamera: vrFlowCamera,
-    flowPainterUtils: vrFlowPainterUtils
+    camera: vrCamera
 };
 export default { vr: vr };
 //# sourceMappingURL=index.js.map

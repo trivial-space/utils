@@ -10,7 +10,7 @@ var __assign = (this && this.__assign) || function () {
     return __assign.apply(this, arguments);
 };
 import { mat4, vec3 } from 'gl-matrix';
-import { Keys } from 'tvs-libs/dist/lib/events/keyboard';
+import { Keys } from 'tvs-libs/dist/events/keyboard';
 var defaultProps = {
     fovy: Math.PI * 0.6,
     aspect: window.innerWidth / window.innerHeight,

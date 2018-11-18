@@ -1,6 +1,6 @@
 import { mat4 } from 'gl-matrix';
-import { KeyState } from 'tvs-libs/dist/lib/events/keyboard';
-import { MouseState } from 'tvs-libs/dist/lib/events/mouse';
+import { KeyState } from 'tvs-libs/dist/events/keyboard';
+import { MouseState } from 'tvs-libs/dist/events/mouse';
 export declare function create(opts?: Partial<{
     fovy: number;
     aspect: number;
