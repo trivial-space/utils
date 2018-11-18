@@ -1,7 +1,6 @@
 import { mat4, vec3 } from 'gl-matrix'
-import { Keys, KeyState } from 'tvs-libs/dist/lib/events/keyboard'
-import { MouseState } from 'tvs-libs/dist/lib/events/mouse'
-
+import { Keys, KeyState } from 'tvs-libs/dist/events/keyboard'
+import { MouseState } from 'tvs-libs/dist/events/mouse'
 
 const defaultProps = {
 	fovy: Math.PI * 0.6,
@@ -19,8 +18,7 @@ const defaultProps = {
 
 type Props = typeof defaultProps
 
-
-export function create (opts = {} as Partial<Props>) {
+export function create(opts = {} as Partial<Props>) {
 	const props = {
 		...defaultProps,
 		...opts
@@ -39,9 +37,10 @@ export function create (opts = {} as Partial<Props>) {
 	return cam
 }
 
-
-export function update ({ props, state: { view, perspective, rotationX, rotationY, position } }: any) {
-
+export function update({
+	props,
+	state: { view, perspective, rotationX, rotationY, position }
+}: any) {
 	if (props.needsUpdatePerspective) {
 		props.needsUpdatePerspective = false
 
@@ -100,7 +99,6 @@ export function update ({ props, state: { view, perspective, rotationX, rotation
 	return needsUpdateView
 }
 
-
 export function updatePosFromKeys(camera: any, speed: number, keys: KeyState) {
 	if (!keys) return
 	if (keys[Keys.UP] || keys[Keys.W]) {
@@ -116,7 +114,6 @@ export function updatePosFromKeys(camera: any, speed: number, keys: KeyState) {
 		camera.props.moveLeft = -speed
 	}
 }
-
 
 export function updateRotFromMouse(camera: any, speed: number, m: MouseState) {
 	camera.state.mouse = camera.state.mouse || { x: 0, y: 0 }

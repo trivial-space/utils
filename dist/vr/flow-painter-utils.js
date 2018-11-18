@@ -2,6 +2,7 @@ import { asyncStreamStart, stream, asyncStream } from 'tvs-flow/dist/lib/utils/e
 import { getContext } from 'tvs-painter/dist/lib/utils/context';
 import { Painter } from 'tvs-painter/dist/lib/painter';
 import { unequal } from 'tvs-libs/dist/lib/utils/predicates';
+import { defaultShaders } from 'tvs-painter/dist/lib/asset-lib';
 export function createBodyCanvas() {
     var canvas = asyncStreamStart(null, function (send) {
         var canvas = document.createElement('canvas');
@@ -99,7 +100,7 @@ export function makeDrawingLayerEntity(painter, data) {
 }
 export function makeEffectLayerEntity(painter, data) {
     var entity = asyncStream([painter.HOT], function (send, painter) {
-        var layer = painter.createEffectLayer();
+        var layer = painter.createEffectLayer().update({ frag: defaultShaders.basicEffect.frag });
         send(layer);
         return layer.destroy;
     });
