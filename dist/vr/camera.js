@@ -26,7 +26,7 @@ var defaultProps = {
 };
 export function create(opts) {
     if (opts === void 0) { opts = {}; }
-    var props = __assign({}, defaultProps, opts);
+    var props = __assign(__assign({}, defaultProps), opts);
     var state = {
         view: mat4.create(),
         perspective: mat4.create(),
