@@ -1,17 +1,6 @@
-var __assign = (this && this.__assign) || function () {
-    __assign = Object.assign || function(t) {
-        for (var s, i = 1, n = arguments.length; i < n; i++) {
-            s = arguments[i];
-            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
-                t[p] = s[p];
-        }
-        return t;
-    };
-    return __assign.apply(this, arguments);
-};
 import { mat4, vec3 } from 'gl-matrix';
 import { Keys } from 'tvs-libs/dist/events/keyboard';
-var defaultProps = {
+const defaultProps = {
     fovy: Math.PI * 0.6,
     aspect: window.innerWidth / window.innerHeight,
     near: 0.1,
@@ -24,27 +13,25 @@ var defaultProps = {
     moveUp: 0,
     needsUpdateView: false
 };
-export function create(opts) {
-    if (opts === void 0) { opts = {}; }
-    var props = __assign(__assign({}, defaultProps), opts);
-    var state = {
+export function create(opts = {}) {
+    const props = Object.assign(Object.assign({}, defaultProps), opts);
+    const state = {
         view: mat4.create(),
         perspective: mat4.create(),
         rotationX: mat4.create(),
         rotationY: mat4.create(),
         position: [0, 0, 0]
     };
-    var cam = { props: props, state: state };
+    const cam = { props, state };
     update(cam);
     return cam;
 }
-export function update(_a) {
-    var props = _a.props, _b = _a.state, view = _b.view, perspective = _b.perspective, rotationX = _b.rotationX, rotationY = _b.rotationY, position = _b.position;
+export function update({ props, state: { view, perspective, rotationX, rotationY, position } }) {
     if (props.needsUpdatePerspective) {
         props.needsUpdatePerspective = false;
         mat4.perspective(perspective, props.fovy, props.aspect, props.near, props.far);
     }
-    var needsUpdateView = props.needsUpdateView;
+    let needsUpdateView = props.needsUpdateView;
     if (props.rotateX) {
         mat4.rotateX(rotationX, rotationX, props.rotateX);
         props.rotateX = 0;
@@ -56,19 +43,19 @@ export function update(_a) {
         needsUpdateView = true;
     }
     if (props.moveForward) {
-        var v = vec3.fromValues(rotationY[8], rotationY[9], rotationY[10]);
+        const v = vec3.fromValues(rotationY[8], rotationY[9], rotationY[10]);
         vec3.add(position, position, vec3.scale(v, v, -props.moveForward));
         props.moveForward = 0;
         needsUpdateView = true;
     }
     if (props.moveLeft) {
-        var v = vec3.fromValues(rotationY[0], rotationY[1], rotationY[2]);
+        const v = vec3.fromValues(rotationY[0], rotationY[1], rotationY[2]);
         vec3.add(position, position, vec3.scale(v, v, -props.moveLeft));
         props.moveLeft = 0;
         needsUpdateView = true;
     }
     if (props.moveUp) {
-        var v = vec3.fromValues(rotationY[4], rotationY[5], rotationY[6]);
+        const v = vec3.fromValues(rotationY[4], rotationY[5], rotationY[6]);
         vec3.add(position, position, vec3.scale(v, v, props.moveUp));
         props.moveUp = 0;
         needsUpdateView = true;
@@ -100,8 +87,8 @@ export function updatePosFromKeys(camera, speed, keys) {
 }
 export function updateRotFromMouse(camera, speed, m) {
     camera.state.mouse = camera.state.mouse || { x: 0, y: 0 };
-    var deltaX = m.drag.x === 0 ? m.drag.x : camera.state.mouse.x - m.drag.x;
-    var deltaY = m.drag.y === 0 ? m.drag.y : camera.state.mouse.y - m.drag.y;
+    const deltaX = m.drag.x === 0 ? m.drag.x : camera.state.mouse.x - m.drag.x;
+    const deltaY = m.drag.y === 0 ? m.drag.y : camera.state.mouse.y - m.drag.y;
     camera.state.mouse.x = m.drag.x;
     camera.state.mouse.y = m.drag.y;
     camera.props.rotateX = deltaY * speed;

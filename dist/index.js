@@ -1,6 +1,6 @@
 import * as vrCamera from './vr/camera';
-export var vr = {
+export const vr = {
     camera: vrCamera
 };
-export default { vr: vr };
+export default { vr };
 //# sourceMappingURL=index.js.map
