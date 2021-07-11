@@ -24,7 +24,7 @@
     "tvs-painter": "^0.1.0"
   },
   "devDependencies": {
-    "@types/node": "14.14.32",
+    "@types/node": "16.3.1",
     "gl-matrix": "3.3.0",
     "tvs-libs": "^0.5.0",
     "tvs-painter": "^0.1.0",
