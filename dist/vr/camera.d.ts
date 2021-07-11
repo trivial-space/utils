@@ -35,6 +35,6 @@ export declare function create(opts?: Partial<{
         position: number[];
     };
 };
-export declare function update({ props, state: { view, perspective, rotationX, rotationY, position } }: any): any;
+export declare function update({ props, state: { view, perspective, rotationX, rotationY, position }, }: any): any;
 export declare function updatePosFromKeys(camera: any, speed: number, keys: KeyState): void;
 export declare function updateRotFromMouse(camera: any, speed: number, m: MouseState): void;
