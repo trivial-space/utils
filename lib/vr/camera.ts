@@ -1,5 +1,5 @@
 import { mat4, vec3 } from 'gl-matrix'
-import { Keys, KeyState } from 'tvs-libs/dist/events/keyboard'
+import { KeyCodes, KeyState } from 'tvs-libs/dist/events/keyboard'
 import { MouseState } from 'tvs-libs/dist/events/mouse'
 
 const defaultProps = {
@@ -13,7 +13,7 @@ const defaultProps = {
 	moveForward: 0,
 	moveLeft: 0,
 	moveUp: 0,
-	needsUpdateView: false
+	needsUpdateView: false,
 }
 
 type Props = typeof defaultProps
@@ -21,7 +21,7 @@ type Props = typeof defaultProps
 export function create(opts = {} as Partial<Props>) {
 	const props = {
 		...defaultProps,
-		...opts
+		...opts,
 	}
 
 	const state = {
@@ -29,7 +29,7 @@ export function create(opts = {} as Partial<Props>) {
 		perspective: mat4.create(),
 		rotationX: mat4.create(),
 		rotationY: mat4.create(),
-		position: [0, 0, 0]
+		position: [0, 0, 0],
 	}
 
 	const cam = { props, state }
@@ -39,7 +39,7 @@ export function create(opts = {} as Partial<Props>) {
 
 export function update({
 	props,
-	state: { view, perspective, rotationX, rotationY, position }
+	state: { view, perspective, rotationX, rotationY, position },
 }: any) {
 	if (props.needsUpdatePerspective) {
 		props.needsUpdatePerspective = false
@@ -49,7 +49,7 @@ export function update({
 			props.fovy,
 			props.aspect,
 			props.near,
-			props.far
+			props.far,
 		)
 	}
 
@@ -101,16 +101,16 @@ export function update({
 
 export function updatePosFromKeys(camera: any, speed: number, keys: KeyState) {
 	if (!keys) return
-	if (keys[Keys.UP] || keys[Keys.W]) {
+	if (keys[KeyCodes.UP] || keys[KeyCodes.W]) {
 		camera.props.moveForward = speed
 	}
-	if (keys[Keys.DOWN] || keys[Keys.S]) {
+	if (keys[KeyCodes.DOWN] || keys[KeyCodes.S]) {
 		camera.props.moveForward = -speed
 	}
-	if (keys[Keys.LEFT] || keys[Keys.A]) {
+	if (keys[KeyCodes.LEFT] || keys[KeyCodes.A]) {
 		camera.props.moveLeft = speed
 	}
-	if (keys[Keys.RIGHT] || keys[Keys.D]) {
+	if (keys[KeyCodes.RIGHT] || keys[KeyCodes.D]) {
 		camera.props.moveLeft = -speed
 	}
 }
