@@ -3,7 +3,7 @@ const { resolve } = require('path')
 module.exports = {
 	mode: 'production',
 
-	entry: resolve(__dirname, 'lib', 'index.ts'),
+	entry: resolve(__dirname, 'src', 'index.ts'),
 
 	output: {
 		path: resolve(__dirname, 'dist'),
@@ -30,6 +30,6 @@ module.exports = {
 
 	resolve: {
 		extensions: ['.ts', '.js', '.json'],
-		modules: ['node_modules', resolve(__dirname, 'lib')],
+		modules: ['node_modules', resolve(__dirname, 'src')],
 	},
 }
