@@ -1,5 +1,5 @@
 import { mat4, vec3 } from 'gl-matrix';
-import { KeyCodes } from 'tvs-libs/dist/events/keyboard';
+import { Keys } from 'tvs-libs/dist/events/keyboard';
 const defaultProps = {
     fovy: Math.PI * 0.6,
     aspect: window.innerWidth / window.innerHeight,
@@ -72,16 +72,16 @@ export function update({ props, state: { view, perspective, rotationX, rotationY
 export function updatePosFromKeys(camera, speed, keys) {
     if (!keys)
         return;
-    if (keys[KeyCodes.UP] || keys[KeyCodes.W]) {
+    if (keys[Keys.UP] || keys[Keys.W]) {
         camera.props.moveForward = speed;
     }
-    if (keys[KeyCodes.DOWN] || keys[KeyCodes.S]) {
+    if (keys[Keys.DOWN] || keys[Keys.S]) {
         camera.props.moveForward = -speed;
     }
-    if (keys[KeyCodes.LEFT] || keys[KeyCodes.A]) {
+    if (keys[Keys.LEFT] || keys[Keys.A]) {
         camera.props.moveLeft = speed;
     }
-    if (keys[KeyCodes.RIGHT] || keys[KeyCodes.D]) {
+    if (keys[Keys.RIGHT] || keys[Keys.D]) {
         camera.props.moveLeft = -speed;
     }
 }

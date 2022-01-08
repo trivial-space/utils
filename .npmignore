@@ -1,9 +1,10 @@
 .idea
 .DS_Store
+.git
 node_modules
 spec
-.git
-.tern-project
-karma.conf.js
+src
+
 webpack.config.js
 tsconfig.json
+.editorconfig
