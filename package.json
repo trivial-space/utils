@@ -1,6 +1,6 @@
 {
   "name": "tvs-utils",
-  "version": "0.5.0",
+  "version": "0.6.0",
   "description": "trivialspace utils - utility and helper functions using other libraries",
   "repository": {
     "type": "git",
