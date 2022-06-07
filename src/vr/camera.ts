@@ -1,5 +1,5 @@
 import { mat4, vec3 } from 'gl-matrix'
-import { Keys, KeyState } from 'tvs-libs/dist/events/keyboard'
+import { KeyCodes, KeyState } from 'tvs-libs/dist/events/keyboard'
 import { MouseState } from 'tvs-libs/dist/events/mouse'
 
 const defaultProps = {
@@ -101,16 +101,16 @@ export function update({
 
 export function updatePosFromKeys(camera: any, speed: number, keys: KeyState) {
 	if (!keys) return
-	if (keys[Keys.UP] || keys[Keys.W]) {
+	if (keys[KeyCodes.UP] || keys[KeyCodes.W]) {
 		camera.props.moveForward = speed
 	}
-	if (keys[Keys.DOWN] || keys[Keys.S]) {
+	if (keys[KeyCodes.DOWN] || keys[KeyCodes.S]) {
 		camera.props.moveForward = -speed
 	}
-	if (keys[Keys.LEFT] || keys[Keys.A]) {
+	if (keys[KeyCodes.LEFT] || keys[KeyCodes.A]) {
 		camera.props.moveLeft = speed
 	}
-	if (keys[Keys.RIGHT] || keys[Keys.D]) {
+	if (keys[KeyCodes.RIGHT] || keys[KeyCodes.D]) {
 		camera.props.moveLeft = -speed
 	}
 }

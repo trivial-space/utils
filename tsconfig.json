@@ -2,7 +2,7 @@
   "compilerOptions": {
     "target": "es6",
     "lib": ["ESNext", "dom"],
-    "module": "es6",
+    "module": "es2022",
     "moduleResolution": "node",
     "strict": true,
     "noUnusedLocals": true,
@@ -15,7 +15,8 @@
     "paths": {
       "*": ["src/*"]
     },
-    "outDir": "dist"
+    "outDir": "dist",
+    "types": ["vite/client"]
   },
   "exclude": ["node_modules", "dist"]
 }
