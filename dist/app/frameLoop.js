@@ -1,5 +1,5 @@
 let updateOnce = null;
-const updateRepeat = {};
+let updateRepeat = {};
 let isLoopRunning = false;
 let uidCounter = 0;
 let oldTime = 0;
@@ -59,6 +59,9 @@ export function startLoop(loopToggleKey = ' ') {
     if (loopToggleKey)
         initKeyboardLoopToggle(loopToggleKey);
     runLoop();
+}
+export function clearLoop() {
+    updateRepeat = {};
 }
 let toggleKey;
 function keyboardToggle(e) {

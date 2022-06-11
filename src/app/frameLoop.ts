@@ -1,10 +1,7 @@
-// onNextTick
-// schedule actions on next animation frame
-
 type Callback = (tpf: number) => void
 
 let updateOnce: { [id: string]: Callback } | null = null
-const updateRepeat: { [id: string]: Callback } = {}
+let updateRepeat: { [id: string]: Callback } = {}
 
 let isLoopRunning = false
 let uidCounter = 0
@@ -75,6 +72,10 @@ export function startLoop(
 ) {
 	if (loopToggleKey) initKeyboardLoopToggle(loopToggleKey)
 	runLoop()
+}
+
+export function clearLoop() {
+	updateRepeat = {}
 }
 
 // toggle loop with keyboard
