@@ -20,7 +20,7 @@ export interface BaseState {
         sizeMultiplier: number;
     };
 }
-declare type ActionHandler<S extends BaseState = BaseState> = (state: S) => void;
+type ActionHandler<S extends BaseState = BaseState> = (state: S) => void;
 export declare const baseEvents: {
     FRAME: string;
     RESIZE: string;

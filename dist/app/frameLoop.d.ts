@@ -1,4 +1,4 @@
-declare type Callback = (tpf: number) => void;
+type Callback = (tpf: number) => void;
 export declare function stopLoop(): void;
 export declare function onNextFrame(fn: Callback, id?: string | number): string | number;
 export declare function addToLoop(fn: Callback, id?: string | number): string | number;
