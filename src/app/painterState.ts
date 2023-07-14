@@ -1,4 +1,3 @@
-import { once } from './scheduler'
 import { windowSize } from 'tvs-libs/dist/events/dom'
 import { keyboard, KeyState } from 'tvs-libs/dist/events/keyboard'
 import { deepOverride } from 'tvs-libs/dist/utils/object'
@@ -9,6 +8,7 @@ import { Painter } from 'tvs-painter/dist/painter'
 import { Shade } from 'tvs-painter/dist/shade'
 import { Effect, Sketch } from 'tvs-painter/dist/sketch'
 import { PointerState, pointer } from 'tvs-libs/dist/events/pointer'
+import { onNextFrame } from './frameLoop'
 
 // === Painter ===
 
@@ -97,7 +97,7 @@ export function getPainterContext<S extends BaseState>(
 		cancelKeys && cancelKeys()
 
 		cancelWindow = windowSize(() =>
-			once(() => {
+			onNextFrame(() => {
 				painter.sizeMultiplier = state.device.sizeMultiplier
 				painter.resize()
 				emit(baseEvents.RESIZE)
@@ -153,7 +153,7 @@ export function getPainterContext<S extends BaseState>(
 		if (s[key]) {
 			const reset = opts && opts.reset
 			if (reset !== true) {
-				val = deepOverride(val, s[key], { ignore: reset })
+				val = deepOverride(val, s[key] as any, { ignore: reset }) as S[K]
 			}
 		}
 		s[key] = val

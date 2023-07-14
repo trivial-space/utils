@@ -1,9 +1,9 @@
-import { once } from './scheduler';
 import { windowSize } from 'tvs-libs/dist/events/dom';
 import { keyboard } from 'tvs-libs/dist/events/keyboard';
 import { deepOverride } from 'tvs-libs/dist/utils/object';
 import { Painter } from 'tvs-painter/dist/painter';
 import { pointer } from 'tvs-libs/dist/events/pointer';
+import { onNextFrame } from './frameLoop';
 let currentCanvas;
 let painter;
 const forms = {};
@@ -51,11 +51,15 @@ export function getPainterContext(canvas, opts) {
         cancelWindow && cancelWindow();
         cancelPointer && cancelPointer();
         cancelKeys && cancelKeys();
-        cancelWindow = windowSize(() => once(() => {
-            painter.sizeMultiplier = state.device.sizeMultiplier;
-            painter.resize();
-            emit(baseEvents.RESIZE);
-        }, 'resize'));
+        cancelWindow = windowSize(() => {
+            console.log('resize handler');
+            onNextFrame(() => {
+                console.log('resize handler on next frame');
+                painter.sizeMultiplier = state.device.sizeMultiplier;
+                painter.resize();
+                emit(baseEvents.RESIZE);
+            }, 'resize');
+        });
         cancelPointer = pointer({
             element: canvas,
             enableRightButton: true,
