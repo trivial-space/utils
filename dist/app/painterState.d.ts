@@ -22,10 +22,10 @@ export interface BaseState {
 }
 type ActionHandler<S extends BaseState = BaseState> = (state: S) => void;
 export declare const baseEvents: {
-    FRAME: string;
-    RESIZE: string;
-    POINTER: string;
-    KEYBOARD: string;
+    readonly FRAME: "frame";
+    readonly RESIZE: "resize";
+    readonly POINTER: "pointer";
+    readonly KEYBOARD: "keyboard";
 };
 export declare function getPainterContext<S extends BaseState>(canvas: HTMLCanvasElement, opts?: PainterOptions): PainterContext<S>;
 export interface PainterContext<S extends BaseState = BaseState> {

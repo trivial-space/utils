@@ -8,7 +8,7 @@ import { Painter } from 'tvs-painter/dist/painter'
 import { Shade } from 'tvs-painter/dist/shade'
 import { Effect, Sketch } from 'tvs-painter/dist/sketch'
 import { PointerState, pointer } from 'tvs-libs/dist/events/pointer'
-import { onNextFrame } from './frameLoop'
+import { addToLoop, onNextFrame } from './frameLoop'
 
 // === Painter ===
 
@@ -73,7 +73,7 @@ export const baseEvents = {
 	RESIZE: 'resize',
 	POINTER: 'pointer',
 	KEYBOARD: 'keyboard',
-}
+} as const
 
 // === Context ===
 
@@ -101,7 +101,7 @@ export function getPainterContext<S extends BaseState>(
 				painter.sizeMultiplier = state.device.sizeMultiplier
 				painter.resize()
 				emit(baseEvents.RESIZE)
-			}, 'resize'),
+			}, 'painter-ctx-resize'),
 		)
 
 		cancelPointer = pointer(
@@ -121,6 +121,10 @@ export function getPainterContext<S extends BaseState>(
 			state.device.keys = k
 			emit(baseEvents.KEYBOARD)
 		})
+
+		addToLoop((tpf) => {
+			state.device.tpf = tpf
+		}, 'painter-ctx-tpf')
 	}
 
 	return {

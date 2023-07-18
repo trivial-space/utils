@@ -8,10 +8,8 @@ let uidCounter = 0
 let oldTime = 0
 
 function processUpdates() {
-	if (!isLoopRunning) return
-
 	const newTime = performance.now()
-	const tpf = oldTime ? newTime - oldTime : oldTime
+	const tpf = oldTime ? newTime - oldTime : 0
 	oldTime = newTime
 
 	if (updateOnce) {
@@ -19,6 +17,11 @@ function processUpdates() {
 			updateOnce[id](tpf)
 		}
 		updateOnce = null
+	}
+
+	if (!isLoopRunning) {
+		oldTime = 0
+		return
 	}
 
 	let updates = 0
@@ -37,7 +40,6 @@ function processUpdates() {
 
 function runLoop() {
 	if (!isLoopRunning) {
-		oldTime = performance.now()
 		requestAnimationFrame(processUpdates)
 		isLoopRunning = true
 	}
@@ -49,8 +51,10 @@ export function stopLoop() {
 
 export function onNextFrame(fn: Callback, id?: string | number) {
 	id = id || fn.name || uidCounter++
+	const startAnimation = !updateOnce && !isLoopRunning
 	updateOnce = updateOnce || {}
 	updateOnce[id] = fn
+	startAnimation && requestAnimationFrame(processUpdates)
 	return id
 }
 

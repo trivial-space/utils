@@ -3,7 +3,7 @@ import { keyboard } from 'tvs-libs/dist/events/keyboard';
 import { deepOverride } from 'tvs-libs/dist/utils/object';
 import { Painter } from 'tvs-painter/dist/painter';
 import { pointer } from 'tvs-libs/dist/events/pointer';
-import { onNextFrame } from './frameLoop';
+import { addToLoop, onNextFrame } from './frameLoop';
 let currentCanvas;
 let painter;
 const forms = {};
@@ -51,15 +51,11 @@ export function getPainterContext(canvas, opts) {
         cancelWindow && cancelWindow();
         cancelPointer && cancelPointer();
         cancelKeys && cancelKeys();
-        cancelWindow = windowSize(() => {
-            console.log('resize handler');
-            onNextFrame(() => {
-                console.log('resize handler on next frame');
-                painter.sizeMultiplier = state.device.sizeMultiplier;
-                painter.resize();
-                emit(baseEvents.RESIZE);
-            }, 'resize');
-        });
+        cancelWindow = windowSize(() => onNextFrame(() => {
+            painter.sizeMultiplier = state.device.sizeMultiplier;
+            painter.resize();
+            emit(baseEvents.RESIZE);
+        }, 'painter-ctx-resize'));
         cancelPointer = pointer({
             element: canvas,
             enableRightButton: true,
@@ -73,6 +69,9 @@ export function getPainterContext(canvas, opts) {
             state.device.keys = k;
             emit(baseEvents.KEYBOARD);
         });
+        addToLoop((tpf) => {
+            state.device.tpf = tpf;
+        }, 'painter-ctx-tpf');
     }
     return {
         painter,
