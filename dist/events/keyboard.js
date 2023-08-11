@@ -113,7 +113,7 @@ function emptyState() {
     return { codes: {}, keys: {} };
 }
 export function keyboard(callback, opts) {
-    const { element = window, keepDefault, propagate } = opts || {};
+    const { element = window, keepDefault = true, propagate = true } = opts || {};
     const pressed = emptyState();
     function onKeydown(event) {
         if (event.defaultPrevented) {

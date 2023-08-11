@@ -128,7 +128,7 @@ export function keyboard(
 	callback: (val: KeyState) => void,
 	opts?: KeyboardOptions,
 ): () => void {
-	const { element = window, keepDefault, propagate } = opts || {}
+	const { element = window, keepDefault = true, propagate = true } = opts || {}
 
 	const pressed: KeyState = emptyState()
 
