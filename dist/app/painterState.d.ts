@@ -27,7 +27,11 @@ export declare const baseEvents: {
     readonly POINTER: "pointer";
     readonly KEYBOARD: "keyboard";
 };
-export declare function getPainterContext<S extends BaseState>(canvas: HTMLCanvasElement, opts?: PainterOptions): PainterContext<S>;
+export interface EventOpts {
+    keepPointerDefault?: boolean;
+    propagatePointer?: boolean;
+}
+export declare function getPainterContext<S extends BaseState>(canvas: HTMLCanvasElement, options?: PainterOptions & EventOpts): PainterContext<S>;
 export interface PainterContext<S extends BaseState = BaseState> {
     painter: Painter;
     gl: GL;

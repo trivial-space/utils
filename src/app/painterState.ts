@@ -81,10 +81,16 @@ let cancelWindow: () => void
 let cancelPointer: () => void
 let cancelKeys: () => void
 
+export interface EventOpts {
+	keepPointerDefault?: boolean
+	propagatePointer?: boolean
+}
+
 export function getPainterContext<S extends BaseState>(
 	canvas: HTMLCanvasElement,
-	opts?: PainterOptions,
+	options?: PainterOptions & EventOpts,
 ): PainterContext<S> {
+	const { keepPointerDefault, propagatePointer, ...opts } = options || {}
 	if (canvas !== currentCanvas) {
 		currentCanvas = canvas
 
@@ -114,6 +120,8 @@ export function getPainterContext<S extends BaseState>(
 				enableRightButton: true,
 				holdRadius: 7,
 				holdDelay: 250,
+				keepDefault: keepPointerDefault,
+				propagate: propagatePointer,
 			},
 		)
 

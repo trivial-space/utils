@@ -1,3 +1,14 @@
+var __rest = (this && this.__rest) || function (s, e) {
+    var t = {};
+    for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p) && e.indexOf(p) < 0)
+        t[p] = s[p];
+    if (s != null && typeof Object.getOwnPropertySymbols === "function")
+        for (var i = 0, p = Object.getOwnPropertySymbols(s); i < p.length; i++) {
+            if (e.indexOf(p[i]) < 0 && Object.prototype.propertyIsEnumerable.call(s, p[i]))
+                t[p[i]] = s[p[i]];
+        }
+    return t;
+};
 import { deepOverride } from 'tvs-libs/dist/utils/object';
 import { Painter } from 'tvs-painter/dist/painter';
 import { addToLoop, onNextFrame } from './frameLoop';
@@ -43,7 +54,8 @@ export const baseEvents = {
 let cancelWindow;
 let cancelPointer;
 let cancelKeys;
-export function getPainterContext(canvas, opts) {
+export function getPainterContext(canvas, options) {
+    const _a = options || {}, { keepPointerDefault, propagatePointer } = _a, opts = __rest(_a, ["keepPointerDefault", "propagatePointer"]);
     if (canvas !== currentCanvas) {
         currentCanvas = canvas;
         painter = new Painter(canvas, opts);
@@ -64,6 +76,8 @@ export function getPainterContext(canvas, opts) {
             enableRightButton: true,
             holdRadius: 7,
             holdDelay: 250,
+            keepDefault: keepPointerDefault,
+            propagate: propagatePointer,
         });
         cancelKeys = keyboard((k) => {
             state.device.keys = k;
