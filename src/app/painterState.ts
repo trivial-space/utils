@@ -1,5 +1,3 @@
-import { windowSize } from 'tvs-libs/dist/events/dom'
-import { keyboard, KeyState } from 'tvs-libs/dist/events/keyboard'
 import { deepOverride } from 'tvs-libs/dist/utils/object'
 import { GL, PainterOptions } from 'tvs-painter'
 import { Form } from 'tvs-painter/dist/form'
@@ -7,8 +5,10 @@ import { Layer } from 'tvs-painter/dist/layer'
 import { Painter } from 'tvs-painter/dist/painter'
 import { Shade } from 'tvs-painter/dist/shade'
 import { Effect, Sketch } from 'tvs-painter/dist/sketch'
-import { PointerState, pointer } from 'tvs-libs/dist/events/pointer'
 import { addToLoop, onNextFrame } from './frameLoop'
+import { PointerState, pointer } from '../events/pointer'
+import { KeyState, keyboard } from '../events/keyboard'
+import { windowSize } from '../events/dom'
 
 // === Painter ===
 
@@ -105,15 +105,15 @@ export function getPainterContext<S extends BaseState>(
 		)
 
 		cancelPointer = pointer(
+			(m) => {
+				state.device.pointer = m
+				emit(baseEvents.POINTER)
+			},
 			{
 				element: canvas,
 				enableRightButton: true,
 				holdRadius: 7,
 				holdDelay: 250,
-			},
-			(m) => {
-				state.device.pointer = m
-				emit(baseEvents.POINTER)
 			},
 		)
 

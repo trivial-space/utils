@@ -17,14 +17,11 @@
   },
   "peerDependency": {
     "gl-matrix": "^3.3.0",
-    "tvs-libs": "^0.7.1",
+    "tvs-libs": "^0.9.0",
     "tvs-painter": "^0.5.0"
   },
   "devDependencies": {
     "@types/node": "^18.16.18",
-    "gl-matrix": "3.4.3",
-    "tvs-libs": "^0.7.1",
-    "tvs-painter": "^0.5.0",
     "typescript": "^5.1.3"
   },
   "engines": {

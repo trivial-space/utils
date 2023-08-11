@@ -1,11 +1,11 @@
-import { KeyState } from 'tvs-libs/dist/events/keyboard';
 import { GL, PainterOptions } from 'tvs-painter';
 import { Form } from 'tvs-painter/dist/form';
 import { Layer } from 'tvs-painter/dist/layer';
 import { Painter } from 'tvs-painter/dist/painter';
 import { Shade } from 'tvs-painter/dist/shade';
 import { Effect, Sketch } from 'tvs-painter/dist/sketch';
-import { PointerState } from 'tvs-libs/dist/events/pointer';
+import { PointerState } from '../events/pointer';
+import { KeyState } from '../events/keyboard';
 declare function getForm(id: string): Form;
 declare function getShade(id: string): Shade;
 declare function getSketch(id: string): Sketch;

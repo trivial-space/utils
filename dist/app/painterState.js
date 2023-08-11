@@ -1,9 +1,9 @@
-import { windowSize } from 'tvs-libs/dist/events/dom';
-import { keyboard } from 'tvs-libs/dist/events/keyboard';
 import { deepOverride } from 'tvs-libs/dist/utils/object';
 import { Painter } from 'tvs-painter/dist/painter';
-import { pointer } from 'tvs-libs/dist/events/pointer';
 import { addToLoop, onNextFrame } from './frameLoop';
+import { pointer } from '../events/pointer';
+import { keyboard } from '../events/keyboard';
+import { windowSize } from '../events/dom';
 let currentCanvas;
 let painter;
 const forms = {};
@@ -56,14 +56,14 @@ export function getPainterContext(canvas, opts) {
             painter.resize();
             emit(baseEvents.RESIZE);
         }, 'painter-ctx-resize'));
-        cancelPointer = pointer({
+        cancelPointer = pointer((m) => {
+            state.device.pointer = m;
+            emit(baseEvents.POINTER);
+        }, {
             element: canvas,
             enableRightButton: true,
             holdRadius: 7,
             holdDelay: 250,
-        }, (m) => {
-            state.device.pointer = m;
-            emit(baseEvents.POINTER);
         });
         cancelKeys = keyboard((k) => {
             state.device.keys = k;
