@@ -153,15 +153,4 @@ export function keyboard(callback, opts) {
         element.removeEventListener('keydown', onKeydown);
     };
 }
-export function keyboardObserver(opts) {
-    const observer = {
-        state: { pressed: emptyState() },
-        destroy: () => { },
-    };
-    function callback(pressed) {
-        observer.state.pressed = pressed;
-    }
-    observer.destroy = keyboard(callback, opts);
-    return observer;
-}
 //# sourceMappingURL=keyboard.js.map

@@ -28,9 +28,3 @@ export interface PointerOpts {
     propagate?: boolean;
 }
 export declare function pointer(callback: (val: PointerState) => void, opts?: PointerOpts): () => void;
-export interface PointerObserver {
-    Buttons: typeof Buttons;
-    state: PointerState;
-    destroy: () => void;
-}
-export declare function pointerObserver(opts?: PointerOpts): PointerObserver;

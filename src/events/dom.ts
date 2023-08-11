@@ -19,20 +19,3 @@ export function windowSize(callback: (s: WindowSizeState) => void) {
 		window.removeEventListener('resize', resize)
 	}
 }
-
-export interface WindowSizeObserver {
-	state: {
-		size: WindowSizeState,
-	}
-	destroy: () => void
-}
-
-export function windowSizeObserver(): WindowSizeObserver {
-	const state = {
-		size: { width: 0, height: 0 },
-	}
-
-	const destroy = windowSize(s => (state.size = s))
-
-	return { state, destroy }
-}

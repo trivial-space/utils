@@ -29,6 +29,7 @@ export function pointer(callback, opts) {
         }
         else {
             state.pressed[e.button] = e;
+            state.pressed[Buttons.RIGHT] = e;
         }
         if (!keepDefault) {
             e.preventDefault();
@@ -101,17 +102,5 @@ export function pointer(callback, opts) {
             element.removeEventListener('contextmenu', preventDefault);
         }
     };
-}
-export function pointerObserver(opts) {
-    const observer = {
-        Buttons,
-        state: {},
-        destroy: () => { },
-    };
-    function callback(state) {
-        observer.state = state;
-    }
-    observer.destroy = pointer(callback, opts);
-    return observer;
 }
 //# sourceMappingURL=pointer.js.map

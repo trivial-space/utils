@@ -118,10 +118,3 @@ export interface KeyboardOptions {
     propagate?: boolean;
 }
 export declare function keyboard(callback: (val: KeyState) => void, opts?: KeyboardOptions): () => void;
-export interface KeyObserver {
-    state: {
-        pressed: KeyState;
-    };
-    destroy: () => void;
-}
-export declare function keyboardObserver(opts?: KeyboardOptions): KeyObserver;

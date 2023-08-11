@@ -69,6 +69,7 @@ export function pointer(
 			}, holdDelay)
 		} else {
 			state.pressed[e.button] = e
+			state.pressed[Buttons.RIGHT] = e
 		}
 
 		if (!keepDefault) {
@@ -154,26 +155,4 @@ export function pointer(
 			element.removeEventListener('contextmenu', preventDefault)
 		}
 	}
-}
-
-export interface PointerObserver {
-	Buttons: typeof Buttons
-	state: PointerState
-	destroy: () => void
-}
-
-export function pointerObserver(opts?: PointerOpts): PointerObserver {
-	const observer: PointerObserver = {
-		Buttons,
-		state: {} as PointerState,
-		destroy: () => {},
-	}
-
-	function callback(state: PointerState) {
-		observer.state = state
-	}
-
-	observer.destroy = pointer(callback, opts)
-
-	return observer
 }

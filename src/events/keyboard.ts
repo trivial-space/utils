@@ -177,25 +177,3 @@ export function keyboard(
 		element.removeEventListener('keydown', onKeydown as EventListener)
 	}
 }
-
-export interface KeyObserver {
-	state: {
-		pressed: KeyState
-	}
-	destroy: () => void
-}
-
-export function keyboardObserver(opts?: KeyboardOptions): KeyObserver {
-	const observer: KeyObserver = {
-		state: { pressed: emptyState() },
-		destroy: () => {},
-	}
-
-	function callback(pressed: KeyState) {
-		observer.state.pressed = pressed
-	}
-
-	observer.destroy = keyboard(callback, opts)
-
-	return observer
-}
